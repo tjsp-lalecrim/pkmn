@@ -15,6 +15,18 @@
         "id": 3,
         "name": "Ether",
         "type": "Potion",
-        "description": "Recovers 10PP of a move"
+        "description": "Recovers 10 PP of a move"
+    },
+    {
+        "id": 4,
+        "name": "Super Potion",
+        "type": "Potion",
+        "description": "Recovers 50 HP"
+    },
+    {
+        "id": 5,
+        "name": "Great Ball",
+        "type": "Pokeball",
+        "description": "Higher catch rate than Pokeball"
     }
 ]
