@@ -17,6 +17,7 @@ let southLocation = null;
 
 let activeBattle = null;
 let activeTab = 'map';
+let pokedexFilter = 'all';
 
 const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
 const battleTabBtn = document.querySelector('.tab-btn[data-tab="battle"]');
@@ -256,6 +257,7 @@ function loadSavedGame() {
 
 function resetGame() {
     localStorage.removeItem(STORAGE_KEY);
+    pokedexFilter = 'all';
     setupStarterTeamAndInventory();
     const startLoc = findLocationById(1) || locations[0] || null;
     updateCurrentLocation(startLoc, false);
@@ -360,6 +362,12 @@ function setLeadPokemon(index) {
     saveGame();
 }
 
+function setPokedexFilter(filterName) {
+    if (!['all', 'seen', 'caught'].includes(filterName)) return;
+    pokedexFilter = filterName;
+    renderPokedex();
+}
+
 function renderPokedex() {
     if (!pokedexPanelEl) return;
 
@@ -368,56 +376,86 @@ function renderPokedex() {
     const seenCount = seenPokemons.length;
     const caughtCount = caughtPokemons.length;
 
-    const entriesHtml = sortedSpecies.map(species => {
+    const filteredSpecies = sortedSpecies.filter(species => {
         const isCaught = caughtPokemons.includes(species.id);
         const isSeen = isCaught || seenPokemons.includes(species.id);
-        const formattedId = `#${String(species.id).padStart(3, '0')}`;
-        const typesLabel = [species.type1, species.type2].filter(Boolean).join(' / ');
-        const spriteUrl = species.sprite || `assets/pokemons/${species.name.toLowerCase()}.png`;
 
-        let statusBadge = '<span class="dex-badge unknown">Não visto</span>';
-        if (isCaught) {
-            statusBadge = '<span class="dex-badge caught">Capturado</span>';
-        } else if (isSeen) {
-            statusBadge = '<span class="dex-badge seen">Visto</span>';
-        }
+        if (pokedexFilter === 'caught') return isCaught;
+        if (pokedexFilter === 'seen') return isSeen;
+        return true;
+    });
 
-        const displayName = isSeen ? species.name : '???';
-        const spriteClass = isCaught
-            ? 'dex-sprite'
-            : isSeen
-                ? 'dex-sprite seen-tint'
-                : 'dex-sprite silhouette';
+    const filterButtonsHtml = `
+        <div class="pokedex-filters" role="group" aria-label="Filtrar Pokédex">
+            <button type="button" class="filter-btn ${pokedexFilter === 'all' ? 'is-active' : ''}" data-dex-filter="all">
+                Todos (${totalCount})
+            </button>
+            <button type="button" class="filter-btn ${pokedexFilter === 'seen' ? 'is-active' : ''}" data-dex-filter="seen">
+                Vistos (${seenCount})
+            </button>
+            <button type="button" class="filter-btn ${pokedexFilter === 'caught' ? 'is-active' : ''}" data-dex-filter="caught">
+                Capturados (${caughtCount})
+            </button>
+        </div>
+    `;
 
-        return `
-            <div class="pokedex-entry ${isCaught ? 'is-caught' : isSeen ? 'is-seen' : 'is-unknown'}">
-                <img class="${spriteClass}" src="${spriteUrl}" alt="${displayName}" onerror="this.style.display='none'">
-                <div class="dex-info">
-                    <div class="dex-header">
-                        <span class="dex-number">${formattedId}</span>
-                        <strong>${displayName}</strong>
-                        ${statusBadge}
+    const entriesHtml = filteredSpecies.length > 0
+        ? filteredSpecies.map(species => {
+            const isCaught = caughtPokemons.includes(species.id);
+            const isSeen = isCaught || seenPokemons.includes(species.id);
+            const formattedId = `#${String(species.id).padStart(3, '0')}`;
+            const typesLabel = [species.type1, species.type2].filter(Boolean).join(' / ');
+            const spriteUrl = species.sprite || `assets/pokemons/${species.name.toLowerCase()}.png`;
+
+            let statusBadge = '<span class="dex-badge unknown">Não visto</span>';
+            if (isCaught) {
+                statusBadge = '<span class="dex-badge caught">Capturado</span>';
+            } else if (isSeen) {
+                statusBadge = '<span class="dex-badge seen">Visto</span>';
+            }
+
+            const displayName = isSeen ? species.name : '???';
+            const spriteClass = isCaught
+                ? 'dex-sprite'
+                : isSeen
+                    ? 'dex-sprite seen-tint'
+                    : 'dex-sprite silhouette';
+
+            return `
+                <div class="pokedex-entry ${isCaught ? 'is-caught' : isSeen ? 'is-seen' : 'is-unknown'}">
+                    <img class="${spriteClass}" src="${spriteUrl}" alt="${displayName}" onerror="this.style.display='none'">
+                    <div class="dex-info">
+                        <div class="dex-header">
+                            <span class="dex-number">${formattedId}</span>
+                            <strong>${displayName}</strong>
+                            ${statusBadge}
+                        </div>
+                        ${isSeen
+                            ? `<small class="dex-types">Tipo: ${typesLabel || '—'}</small>`
+                            : '<small class="dex-types">Explore as rotas para registrar.</small>'
+                        }
+                        ${isCaught
+                            ? `<small class="dex-stats">Base — HP: ${species.baseHp} • ATK: ${species.attack} • DEF: ${species.defense} • SPD: ${species.speed}</small>`
+                            : ''
+                        }
                     </div>
-                    ${isSeen
-                        ? `<small class="dex-types">Tipo: ${typesLabel || '—'}</small>`
-                        : '<small class="dex-types">Explore as rotas para registrar.</small>'
-                    }
-                    ${isCaught
-                        ? `<small class="dex-stats">Base — HP: ${species.baseHp} • ATK: ${species.attack} • DEF: ${species.defense} • SPD: ${species.speed}</small>`
-                        : ''
-                    }
                 </div>
-            </div>
-        `;
-    }).join('');
+            `;
+        }).join('')
+        : '<p class="pokedex-empty">Nenhum Pokémon encontrado para este filtro.</p>';
 
     pokedexPanelEl.innerHTML = `
         <div class="pokedex-top">
             <h3>Pokédex de Kanto</h3>
             <p class="pokedex-counter">Vistos: <strong>${seenCount}/${totalCount}</strong> • Capturados: <strong>${caughtCount}/${totalCount}</strong></p>
+            ${filterButtonsHtml}
         </div>
         <div class="pokedex-list">${entriesHtml}</div>
     `;
+
+    pokedexPanelEl.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => setPokedexFilter(btn.dataset.dexFilter));
+    });
 }
 
 function renderPartyTab() {
