@@ -117,7 +117,7 @@
         "west": null,
         "south": 1,
         "encounterRate": 0.65,
-        "wildPokemons": [1]
+        "wildPokemons": [16, 19]
     },
     {
         "id": 13,
@@ -127,7 +127,7 @@
         "west": null,
         "south": 2,
         "encounterRate": 0.65,
-        "wildPokemons": [1]
+        "wildPokemons": [10, 16, 19]
     },
     {
         "id": 14,
@@ -137,7 +137,7 @@
         "west": 3,
         "south": null,
         "encounterRate": 0.65,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 19, 23, 39]
     },
     {
         "id": 15,
@@ -147,7 +147,7 @@
         "west": 38,
         "south": null,
         "encounterRate": 0.55,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [19, 23, 27]
     },
     {
         "id": 16,
@@ -157,7 +157,7 @@
         "west": null,
         "south": 9,
         "encounterRate": 0.55,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 17, 19, 43, 52]
     },
     {
         "id": 17,
@@ -167,7 +167,7 @@
         "west": null,
         "south": 5,
         "encounterRate": 0.55,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 17, 19, 43, 52]
     },
     {
         "id": 18,
@@ -177,7 +177,7 @@
         "west": 7,
         "south": null,
         "encounterRate": 0.5,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 17, 19, 37, 43, 52, 58]
     },
     {
         "id": 19,
@@ -187,7 +187,7 @@
         "west": 9,
         "south": null,
         "encounterRate": 0.55,
-        "wildPokemons": [2]
+        "wildPokemons": [16, 17, 19, 23, 37, 52, 58]
     },
     {
         "id": 20,
@@ -197,7 +197,7 @@
         "west": 4,
         "south": null,
         "encounterRate": 0.6,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 17, 19, 23, 27]
     },
     {
         "id": 21,
@@ -207,7 +207,7 @@
         "west": null,
         "south": 6,
         "encounterRate": 0.65,
-        "wildPokemons": [2]
+        "wildPokemons": [16, 17, 19, 23, 27]
     },
     {
         "id": 22,
@@ -217,7 +217,7 @@
         "west": 5,
         "south": null,
         "encounterRate": 0.55,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 17, 19, 23, 27]
     },
     {
         "id": 23,
@@ -227,7 +227,7 @@
         "west": 22,
         "south": 24,
         "encounterRate": 0.6,
-        "wildPokemons": [2]
+        "wildPokemons": [16, 17, 43, 54, 143]
     },
     {
         "id": 24,
@@ -237,7 +237,7 @@
         "west": 25,
         "south": null,
         "encounterRate": 0.6,
-        "wildPokemons": [2]
+        "wildPokemons": [16, 17, 43, 52]
     },
     {
         "id": 25,
@@ -247,7 +247,7 @@
         "west": 26,
         "south": null,
         "encounterRate": 0.6,
-        "wildPokemons": [2]
+        "wildPokemons": [16, 17, 23, 43, 52]
     },
     {
         "id": 26,
@@ -257,7 +257,7 @@
         "west": 8,
         "south": null,
         "encounterRate": 0.65,
-        "wildPokemons": [2]
+        "wildPokemons": [16, 17, 23, 43, 52]
     },
     {
         "id": 27,
@@ -267,7 +267,7 @@
         "west": null,
         "south": 28,
         "encounterRate": 0.55,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 17, 19, 143]
     },
     {
         "id": 28,
@@ -277,7 +277,7 @@
         "west": null,
         "south": 29,
         "encounterRate": 0.65,
-        "wildPokemons": [2]
+        "wildPokemons": [17, 19, 23]
     },
     {
         "id": 29,
@@ -287,7 +287,7 @@
         "west": null,
         "south": null,
         "encounterRate": 0.6,
-        "wildPokemons": [2]
+        "wildPokemons": [16, 17, 19, 23]
     },
     {
         "id": 30,
@@ -297,7 +297,7 @@
         "west": 31,
         "south": null,
         "encounterRate": 0.6,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [7, 54]
     },
     {
         "id": 31,
@@ -307,7 +307,7 @@
         "west": 10,
         "south": 40,
         "encounterRate": 0.6,
-        "wildPokemons": [2]
+        "wildPokemons": [7, 54]
     },
     {
         "id": 32,
@@ -317,7 +317,7 @@
         "west": null,
         "south": 10,
         "encounterRate": 0.65,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [16, 17, 19, 54]
     },
     {
         "id": 33,
@@ -327,7 +327,7 @@
         "west": null,
         "south": null,
         "encounterRate": 0.65,
-        "wildPokemons": [1]
+        "wildPokemons": [16, 19, 23, 27]
     },
     {
         "id": 34,
@@ -337,7 +337,7 @@
         "west": null,
         "south": 33,
         "encounterRate": 0.65,
-        "wildPokemons": [2]
+        "wildPokemons": [17, 23, 27, 37, 58]
     },
     {
         "id": 35,
@@ -347,7 +347,7 @@
         "west": null,
         "south": 4,
         "encounterRate": 0.6,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [10, 11, 16, 19, 43]
     },
     {
         "id": 36,
@@ -357,7 +357,7 @@
         "west": null,
         "south": 35,
         "encounterRate": 0.6,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [10, 11, 16, 19, 43]
     },
     {
         "id": 37,
@@ -367,7 +367,7 @@
         "west": null,
         "south": 2,
         "encounterRate": 0.8,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [10, 11, 12, 25]
     },
     {
         "id": 38,
@@ -377,7 +377,7 @@
         "west": null,
         "south": 14,
         "encounterRate": 0.75,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [19, 27, 35, 74]
     },
     {
         "id": 39,
@@ -387,7 +387,7 @@
         "west": 21,
         "south": 42,
         "encounterRate": 0.7,
-        "wildPokemons": [2]
+        "wildPokemons": [23, 27, 66, 74]
     },
     {
         "id": 40,
@@ -397,7 +397,7 @@
         "west": 10,
         "south": null,
         "encounterRate": 0.7,
-        "wildPokemons": [2]
+        "wildPokemons": [7, 8, 54, 74]
     },
     {
         "id": 41,
@@ -407,7 +407,7 @@
         "west": null,
         "south": 34,
         "encounterRate": 0.85,
-        "wildPokemons": [2]
+        "wildPokemons": [27, 66, 74, 149]
     },
     {
         "id": 42,
@@ -417,7 +417,7 @@
         "west": null,
         "south": null,
         "encounterRate": 0.7,
-        "wildPokemons": [2]
+        "wildPokemons": [25, 74]
     },
     {
         "id": 43,
@@ -427,7 +427,7 @@
         "west": 8,
         "south": null,
         "encounterRate": 0.85,
-        "wildPokemons": [1, 2]
+        "wildPokemons": [2, 23, 27, 43, 54, 149]
     },
     {
         "id": 44,
@@ -437,7 +437,7 @@
         "west": null,
         "south": null,
         "encounterRate": 0.7,
-        "wildPokemons": [2]
+        "wildPokemons": [92]
     },
     {
         "id": 45,
@@ -447,7 +447,7 @@
         "west": null,
         "south": null,
         "encounterRate": 0.7,
-        "wildPokemons": [2]
+        "wildPokemons": [23, 37, 58, 92]
     },
     {
         "id": 46,
@@ -457,6 +457,6 @@
         "west": 4,
         "south": null,
         "encounterRate": 0.9,
-        "wildPokemons": [2]
+        "wildPokemons": [2, 8, 25, 52, 66, 133, 149]
     }
 ]
