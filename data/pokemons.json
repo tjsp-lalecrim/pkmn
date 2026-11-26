@@ -9,7 +9,7 @@
         "defense": 49,
         "speed": 45,
         "moves": [1, 4, 5],
-        "sprite": "assets/pokemons/1.png"
+        "sprite": "assets/pokemons/bulbasaur.png"
     },
     {
         "id": 2,
@@ -21,7 +21,19 @@
         "defense": 63,
         "speed": 60,
         "moves": [1, 4, 5],
-        "sprite": "assets/pokemons/2.png"
+        "sprite": "assets/pokemons/ivysaur.png"
+    },
+    {
+        "id": 3,
+        "name": "Venusaur",
+        "type1": "Grass",
+        "type2": "Poison",
+        "baseHp": 80,
+        "attack": 82,
+        "defense": 83,
+        "speed": 80,
+        "moves": [1, 4, 5],
+        "sprite": "assets/pokemons/venusaur.png"
     },
     {
         "id": 4,
@@ -33,7 +45,31 @@
         "defense": 43,
         "speed": 65,
         "moves": [3, 4, 6],
-        "sprite": "assets/pokemons/4.png"
+        "sprite": "assets/pokemons/charmander.png"
+    },
+    {
+        "id": 5,
+        "name": "Charmeleon",
+        "type1": "Fire",
+        "type2": null,
+        "baseHp": 58,
+        "attack": 64,
+        "defense": 58,
+        "speed": 80,
+        "moves": [3, 2, 6],
+        "sprite": "assets/pokemons/charmeleon.png"
+    },
+    {
+        "id": 6,
+        "name": "Charizard",
+        "type1": "Fire",
+        "type2": "Flying",
+        "baseHp": 78,
+        "attack": 84,
+        "defense": 78,
+        "speed": 100,
+        "moves": [3, 2, 6],
+        "sprite": "assets/pokemons/charizard.png"
     },
     {
         "id": 7,
@@ -45,7 +81,31 @@
         "defense": 65,
         "speed": 43,
         "moves": [1, 2, 7],
-        "sprite": "assets/pokemons/7.png"
+        "sprite": "assets/pokemons/squirtle.png"
+    },
+    {
+        "id": 8,
+        "name": "Wartortle",
+        "type1": "Water",
+        "type2": null,
+        "baseHp": 59,
+        "attack": 63,
+        "defense": 80,
+        "speed": 58,
+        "moves": [1, 2, 7],
+        "sprite": "assets/pokemons/wartortle.png"
+    },
+    {
+        "id": 9,
+        "name": "Blastoise",
+        "type1": "Water",
+        "type2": null,
+        "baseHp": 79,
+        "attack": 83,
+        "defense": 100,
+        "speed": 78,
+        "moves": [1, 2, 7],
+        "sprite": "assets/pokemons/blastoise.png"
     },
     {
         "id": 25,
@@ -57,6 +117,6 @@
         "defense": 40,
         "speed": 90,
         "moves": [1, 4, 8],
-        "sprite": "assets/pokemons/25.png"
+        "sprite": "assets/pokemons/pikachu.png"
     }
 ]
