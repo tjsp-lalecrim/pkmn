@@ -6,6 +6,8 @@ const pokemons = [];
 const moves = [];
 const inventory = [];
 const playerParty = [];
+const seenPokemons = [];
+const caughtPokemons = [];
 
 let currentLocation = null;
 let northLocation = null;
@@ -22,12 +24,14 @@ const tabPanels = {
     map: document.getElementById('tab-map'),
     party: document.getElementById('tab-party'),
     inventory: document.getElementById('tab-inventory'),
+    pokedex: document.getElementById('tab-pokedex'),
     battle: document.getElementById('tab-battle')
 };
 
 const mainSceneEl = document.querySelector('.main-scene');
 const partyPanelEl = document.querySelector('.party-panel');
 const itemsListEl = document.querySelector('.items-list');
+const pokedexPanelEl = document.querySelector('.pokedex-panel');
 const battleSpritesEl = document.querySelector('.battle-scene .sprites');
 const battleMenuEl = document.querySelector('.battle-scene .battle-menu');
 
@@ -55,12 +59,42 @@ function setActiveTab(tabName) {
 
     if (tabName === 'party') renderPartyTab();
     if (tabName === 'inventory') renderInventory();
+    if (tabName === 'pokedex') renderPokedex();
     if (tabName === 'battle' && activeBattle) renderBattle();
 }
 
 function updateBattleTabVisibility() {
     if (!battleTabBtn) return;
     battleTabBtn.classList.toggle('is-hidden', !activeBattle);
+}
+
+function registerSeenPokemon(speciesId) {
+    const id = Number(speciesId);
+    if (!id) return false;
+    if (!seenPokemons.includes(id)) {
+        seenPokemons.push(id);
+        return true;
+    }
+    return false;
+}
+
+function registerCaughtPokemon(speciesId) {
+    const id = Number(speciesId);
+    if (!id) return false;
+    registerSeenPokemon(id);
+    if (!caughtPokemons.includes(id)) {
+        caughtPokemons.push(id);
+        return true;
+    }
+    return false;
+}
+
+function syncPokedexWithParty() {
+    playerParty.forEach(poke => {
+        if (poke && poke.speciesId) {
+            registerCaughtPokemon(poke.speciesId);
+        }
+    });
 }
 
 function getLocationAssetUrl(location) {
@@ -150,7 +184,7 @@ function createPokemonInstance(speciesId, level = 5) {
         name: base.name,
         type1: base.type1,
         type2: base.type2,
-        sprite: base.sprite || `assets/pokemons/${base.id}.png`,
+        sprite: base.sprite || `assets/pokemons/${base.name.toLowerCase()}.png`,
         level,
         xp: 0,
         nextLevelXp: getXpThreshold(level),
@@ -169,7 +203,9 @@ function saveGame() {
         const payload = {
             currentLocationId: currentLocation.id,
             playerParty,
-            inventory
+            inventory,
+            seenPokemons,
+            caughtPokemons
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch (err) {
@@ -193,10 +229,23 @@ function loadSavedGame() {
             inventory.push(...parsed.inventory);
         }
 
+        seenPokemons.length = 0;
+        if (Array.isArray(parsed.seenPokemons)) {
+            seenPokemons.push(...parsed.seenPokemons.map(Number));
+        }
+
+        caughtPokemons.length = 0;
+        if (Array.isArray(parsed.caughtPokemons)) {
+            caughtPokemons.push(...parsed.caughtPokemons.map(Number));
+        }
+
+        syncPokedexWithParty();
+
         const savedLoc = findLocationById(parsed.currentLocationId) || findLocationById(1) || locations[0];
         updateCurrentLocation(savedLoc, false);
         renderPartyTab();
         renderInventory();
+        renderPokedex();
         renderScene();
         return true;
     } catch (err) {
@@ -243,8 +292,14 @@ function grantExperience(pokemonInst, xpGain) {
 
 function setupStarterTeamAndInventory() {
     playerParty.length = 0;
+    seenPokemons.length = 0;
+    caughtPokemons.length = 0;
+
     const starter = createPokemonInstance(1, 5);
-    if (starter) playerParty.push(starter);
+    if (starter) {
+        playerParty.push(starter);
+        registerCaughtPokemon(starter.speciesId);
+    }
 
     inventory.length = 0;
     const starterPotion = items.find(i => i.id === 1);
@@ -257,6 +312,7 @@ function setupStarterTeamAndInventory() {
 
     renderPartyTab();
     renderInventory();
+    renderPokedex();
     renderScene();
     saveGame();
 }
@@ -302,6 +358,66 @@ function setLeadPokemon(index) {
     renderPartyTab();
     renderScene();
     saveGame();
+}
+
+function renderPokedex() {
+    if (!pokedexPanelEl) return;
+
+    const sortedSpecies = [...pokemons].sort((a, b) => a.id - b.id);
+    const totalCount = sortedSpecies.length;
+    const seenCount = seenPokemons.length;
+    const caughtCount = caughtPokemons.length;
+
+    const entriesHtml = sortedSpecies.map(species => {
+        const isCaught = caughtPokemons.includes(species.id);
+        const isSeen = isCaught || seenPokemons.includes(species.id);
+        const formattedId = `#${String(species.id).padStart(3, '0')}`;
+        const typesLabel = [species.type1, species.type2].filter(Boolean).join(' / ');
+        const spriteUrl = species.sprite || `assets/pokemons/${species.name.toLowerCase()}.png`;
+
+        let statusBadge = '<span class="dex-badge unknown">Não visto</span>';
+        if (isCaught) {
+            statusBadge = '<span class="dex-badge caught">Capturado</span>';
+        } else if (isSeen) {
+            statusBadge = '<span class="dex-badge seen">Visto</span>';
+        }
+
+        const displayName = isSeen ? species.name : '???';
+        const spriteClass = isCaught
+            ? 'dex-sprite'
+            : isSeen
+                ? 'dex-sprite seen-tint'
+                : 'dex-sprite silhouette';
+
+        return `
+            <div class="pokedex-entry ${isCaught ? 'is-caught' : isSeen ? 'is-seen' : 'is-unknown'}">
+                <img class="${spriteClass}" src="${spriteUrl}" alt="${displayName}" onerror="this.style.display='none'">
+                <div class="dex-info">
+                    <div class="dex-header">
+                        <span class="dex-number">${formattedId}</span>
+                        <strong>${displayName}</strong>
+                        ${statusBadge}
+                    </div>
+                    ${isSeen
+                        ? `<small class="dex-types">Tipo: ${typesLabel || '—'}</small>`
+                        : '<small class="dex-types">Explore as rotas para registrar.</small>'
+                    }
+                    ${isCaught
+                        ? `<small class="dex-stats">Base — HP: ${species.baseHp} • ATK: ${species.attack} • DEF: ${species.defense} • SPD: ${species.speed}</small>`
+                        : ''
+                    }
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    pokedexPanelEl.innerHTML = `
+        <div class="pokedex-top">
+            <h3>Pokédex de Kanto</h3>
+            <p class="pokedex-counter">Vistos: <strong>${seenCount}/${totalCount}</strong> • Capturados: <strong>${caughtCount}/${totalCount}</strong></p>
+        </div>
+        <div class="pokedex-list">${entriesHtml}</div>
+    `;
 }
 
 function renderPartyTab() {
@@ -395,7 +511,7 @@ function renderScene() {
                 <div class="party-details">
                     <p><strong>Líder:</strong> ${lead.name} Nv.${lead.level} — HP: ${lead.hp}/${lead.maxHp}</p>
                     <div class="xp-bar"><div class="xp-fill" style="width:${xpPct}%"></div></div>
-                    <small>Equipe: ${playerParty.length}/6 • XP: ${lead.xp}/${lead.nextLevelXp}</small>
+                    <small>Equipe: ${playerParty.length}/6 • XP: ${lead.xp}/${lead.nextLevelXp} • Pokédex: ${caughtPokemons.length}/${pokemons.length}</small>
                 </div>
             </div>
         ` : ''}
@@ -485,6 +601,10 @@ function triggerWildEncounter(force = false) {
     const wildLevel = Math.max(2, lead.level + Math.floor(Math.random() * 3) - 1);
     const enemy = createPokemonInstance(randomSpeciesId, wildLevel);
     if (!enemy) return;
+
+    registerSeenPokemon(enemy.speciesId);
+    renderPokedex();
+    saveGame();
 
     activeBattle = {
         player: lead,
@@ -577,6 +697,7 @@ function handleBattleItem(itemId) {
         const catchChance = 0.35 + hpRatio * 0.55;
 
         if (Math.random() <= catchChance) {
+            registerCaughtPokemon(enemy.speciesId);
             activeBattle.log = `Você lançou uma ${invEntry.name} e capturou ${enemy.name}!`;
             if (playerParty.length < 6) {
                 playerParty.push(enemy);
@@ -591,6 +712,7 @@ function handleBattleItem(itemId) {
     saveGame();
     renderInventory();
     renderPartyTab();
+    renderPokedex();
     renderBattle();
 }
 
@@ -605,6 +727,7 @@ function endBattle() {
     renderScene();
     renderPartyTab();
     renderInventory();
+    renderPokedex();
     saveGame();
 }
 
