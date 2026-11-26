@@ -34,7 +34,7 @@ body {
 .inventory,
 .battle-scene {
     width: 100%;
-    max-width: 520px;
+    max-width: 540px;
     background-color: #1a1f2b;
     border: 1px solid #323a4b;
     border-radius: 12px;
@@ -44,6 +44,12 @@ body {
 .main-scene h2,
 .inventory h3 {
     margin: 0 0 8px 0;
+}
+
+.party-list h4 {
+    margin: 12px 0 8px 0;
+    font-size: 0.95rem;
+    color: #cbd5e1;
 }
 
 .location-banner {
@@ -60,29 +66,48 @@ body {
     align-items: center;
     gap: 12px;
     background-color: #212838;
+    border: 1px solid #2e384d;
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 8px;
 }
 
+.party-summary.is-lead {
+    border-color: #52b788;
+}
+
+.party-details {
+    flex: 1;
+}
+
 .party-summary p {
-    margin: 0 0 6px 0;
+    margin: 0 0 4px 0;
     font-size: 0.9rem;
 }
 
+.lead-badge {
+    background-color: #264653;
+    color: #95d5b2;
+    font-size: 0.72rem;
+    padding: 2px 6px;
+    border-radius: 999px;
+    margin-left: 6px;
+}
+
 .mini-sprite {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     object-fit: contain;
 }
 
 .xp-bar {
-    width: 180px;
+    width: 100%;
+    max-width: 180px;
     height: 6px;
     background-color: #12161f;
     border-radius: 999px;
     overflow: hidden;
-    margin-bottom: 2px;
+    margin-top: 4px;
 }
 
 .xp-fill {
@@ -95,7 +120,7 @@ body {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .safe-zone-tag {
@@ -177,6 +202,10 @@ body {
 
 .inventory-item:last-child {
     border-bottom: none;
+}
+
+.inventory-info {
+    flex: 1;
 }
 
 .item-sprite {
@@ -262,6 +291,11 @@ body {
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
+}
+
+.action-btn.small-btn {
+    padding: 5px 9px;
+    font-size: 0.78rem;
 }
 
 .action-btn:hover:not(:disabled) {

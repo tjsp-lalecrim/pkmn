@@ -1,3 +1,5 @@
+const STORAGE_KEY = 'kanto_adventure_save_v1';
+
 const locations = [];
 const items = [];
 const pokemons = [];
@@ -82,9 +84,6 @@ async function loadMap() {
         const data = await response.json();
         locations.length = 0;
         locations.push(...data);
-
-        currentLocation = findLocationById(1) || locations[0] || null;
-        updateCurrentLocation(currentLocation, false);
     } catch (error) {
         console.error('Error loading map data:', error);
     }
@@ -128,6 +127,54 @@ function createPokemonInstance(speciesId, level = 5) {
         speed: stats.speed,
         moves: pokemonMoves
     };
+}
+
+function saveGame() {
+    if (!currentLocation) return;
+    try {
+        const payload = {
+            currentLocationId: currentLocation.id,
+            playerParty,
+            inventory
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (err) {
+        console.warn('Não foi possível salvar no localStorage:', err);
+    }
+}
+
+function loadSavedGame() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        const parsed = JSON.parse(raw);
+
+        if (!Array.isArray(parsed.playerParty) || parsed.playerParty.length === 0) return false;
+
+        playerParty.length = 0;
+        playerParty.push(...parsed.playerParty);
+
+        inventory.length = 0;
+        if (Array.isArray(parsed.inventory)) {
+            inventory.push(...parsed.inventory);
+        }
+
+        const savedLoc = findLocationById(parsed.currentLocationId) || findLocationById(1) || locations[0];
+        updateCurrentLocation(savedLoc, false);
+        renderInventory();
+        renderScene();
+        return true;
+    } catch (err) {
+        console.warn('Falha ao carregar save:', err);
+        return false;
+    }
+}
+
+function resetGame() {
+    localStorage.removeItem(STORAGE_KEY);
+    setupStarterTeamAndInventory();
+    const startLoc = findLocationById(1) || locations[0] || null;
+    updateCurrentLocation(startLoc, false);
 }
 
 function grantExperience(pokemonInst, xpGain) {
@@ -174,6 +221,48 @@ function setupStarterTeamAndInventory() {
 
     renderInventory();
     renderScene();
+    saveGame();
+}
+
+function useFieldItem(itemId) {
+    if (activeBattle) return;
+
+    const entry = inventory.find(i => i.id === itemId && i.quantity > 0);
+    if (!entry) return;
+
+    const lead = playerParty[0];
+    if (!lead) return;
+
+    if (entry.id === 1) {
+        if (lead.hp >= lead.maxHp) return;
+        const healed = Math.min(20, lead.maxHp - lead.hp);
+        lead.hp += healed;
+        entry.quantity -= 1;
+    } else if (entry.id === 3) {
+        let restoredAny = false;
+        lead.moves.forEach(m => {
+            if (m.currentPp < m.pp) {
+                m.currentPp = Math.min(m.pp, m.currentPp + 10);
+                restoredAny = true;
+            }
+        });
+        if (!restoredAny) return;
+        entry.quantity -= 1;
+    } else {
+        return;
+    }
+
+    renderInventory();
+    renderScene();
+    saveGame();
+}
+
+function setLeadPokemon(index) {
+    if (activeBattle || index <= 0 || index >= playerParty.length) return;
+    const [chosen] = playerParty.splice(index, 1);
+    playerParty.unshift(chosen);
+    renderScene();
+    saveGame();
 }
 
 function renderInventory() {
@@ -185,52 +274,84 @@ function renderInventory() {
         return;
     }
 
+    const lead = playerParty[0];
+
     inventory.forEach(entry => {
         const div = document.createElement('div');
         div.className = 'inventory-item';
         const itemImgUrl = getItemAssetUrl(entry);
+
+        let canUseOutside = false;
+        if (!activeBattle && entry.quantity > 0 && lead) {
+            if (entry.id === 1 && lead.hp < lead.maxHp) canUseOutside = true;
+            if (entry.id === 3 && lead.moves.some(m => m.currentPp < m.pp)) canUseOutside = true;
+        }
+
         div.innerHTML = `
             <img class="item-sprite" src="${itemImgUrl}" alt="${entry.name}" onerror="this.style.display='none'">
-            <div>
+            <div class="inventory-info">
                 <strong>${entry.name}</strong> x${entry.quantity} — <span>${entry.description}</span>
             </div>
+            ${canUseOutside ? `<button class="action-btn small-btn use-field-item-btn" data-item-id="${entry.id}">Usar no Líder</button>` : ''}
         `;
         itemsListEl.appendChild(div);
+    });
+
+    itemsListEl.querySelectorAll('.use-field-item-btn').forEach(btn => {
+        btn.addEventListener('click', () => useFieldItem(Number(btn.dataset.itemId)));
     });
 }
 
 function renderScene() {
     if (!mainSceneEl || !currentLocation) return;
 
-    const lead = playerParty[0];
     const hasWild = Array.isArray(currentLocation.wildPokemons) && currentLocation.wildPokemons.length > 0;
     const locImgUrl = getLocationAssetUrl(currentLocation);
-    const xpPct = lead ? Math.min(100, Math.round((lead.xp / lead.nextLevelXp) * 100)) : 0;
+
+    const partyCardsHtml = playerParty.map((poke, idx) => {
+        const xpPct = Math.min(100, Math.round((poke.xp / poke.nextLevelXp) * 100));
+        return `
+            <div class="party-summary ${idx === 0 ? 'is-lead' : ''}">
+                <img class="mini-sprite" src="${poke.sprite}" alt="${poke.name}" onerror="this.style.display='none'">
+                <div class="party-details">
+                    <p>
+                        <strong>${poke.name}</strong> Nv.${poke.level}
+                        ${idx === 0 ? '<span class="lead-badge">Líder</span>' : ''}
+                    </p>
+                    <small>HP: ${poke.hp}/${poke.maxHp} • XP: ${poke.xp}/${poke.nextLevelXp}</small>
+                    <div class="xp-bar"><div class="xp-fill" style="width:${xpPct}%"></div></div>
+                </div>
+                ${idx > 0 ? `<button class="action-btn small-btn set-lead-btn" data-party-idx="${idx}">Tornar Líder</button>` : ''}
+            </div>
+        `;
+    }).join('');
 
     mainSceneEl.innerHTML = `
         <img class="location-banner" src="${locImgUrl}" alt="${currentLocation.name}" onerror="this.style.display='none'">
         <h2>${currentLocation.name}</h2>
-        ${lead ? `
-            <div class="party-summary">
-                <img class="mini-sprite" src="${lead.sprite}" alt="${lead.name}" onerror="this.style.display='none'">
-                <div>
-                    <p><strong>Equipe (${playerParty.length}/6):</strong> ${lead.name} Nv.${lead.level} — HP: ${lead.hp}/${lead.maxHp}</p>
-                    <div class="xp-bar"><div class="xp-fill" style="width:${xpPct}%"></div></div>
-                    <small>XP: ${lead.xp}/${lead.nextLevelXp}</small>
-                </div>
-            </div>
-        ` : ''}
+        <div class="party-list">
+            <h4>Equipe (${playerParty.length}/6)</h4>
+            ${partyCardsHtml}
+        </div>
         <div class="scene-actions">
             ${hasWild ? '<button id="explore-btn" class="action-btn">Procurar Pokémon Selvagem</button>' : '<p class="safe-zone-tag">Zona segura</p>'}
             ${playerParty.some(p => p.hp < p.maxHp) ? '<button id="heal-center-btn" class="action-btn">Descansar (Curar Equipe)</button>' : ''}
+            <button id="reset-save-btn" class="action-btn flee-btn">Novo Jogo</button>
         </div>
     `;
+
+    mainSceneEl.querySelectorAll('.set-lead-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLeadPokemon(Number(btn.dataset.partyIdx)));
+    });
 
     document.getElementById('explore-btn')?.addEventListener('click', () => triggerWildEncounter(true));
     document.getElementById('heal-center-btn')?.addEventListener('click', () => {
         playerParty.forEach(p => { p.hp = p.maxHp; });
         renderScene();
+        renderInventory();
+        saveGame();
     });
+    document.getElementById('reset-save-btn')?.addEventListener('click', resetGame);
 }
 
 async function loadContent() {
@@ -240,7 +361,13 @@ async function loadContent() {
         loadItems(),
         loadMap()
     ]);
-    setupStarterTeamAndInventory();
+
+    const loadedFromSave = loadSavedGame();
+    if (!loadedFromSave) {
+        setupStarterTeamAndInventory();
+        const startLoc = findLocationById(1) || locations[0] || null;
+        updateCurrentLocation(startLoc, false);
+    }
 }
 
 function updateDirectionButton(btn, targetLocation) {
@@ -271,6 +398,7 @@ function renderMap() {
     updateDirectionButton(southLocationBtn, southLocation);
 
     renderScene();
+    renderInventory();
 }
 
 function findLocationById(id) {
@@ -359,11 +487,13 @@ function handlePlayerMove(moveIndex) {
         const xpMsg = grantExperience(player, xpEarned);
         activeBattle.log += ` ${enemy.name} selvagem foi derrotado!${xpMsg}`;
         activeBattle.finished = true;
+        saveGame();
         renderBattle();
         return;
     }
 
     executeEnemyTurn();
+    saveGame();
     renderBattle();
 }
 
@@ -397,6 +527,7 @@ function handleBattleItem(itemId) {
         }
     }
 
+    saveGame();
     renderInventory();
     renderBattle();
 }
@@ -411,6 +542,8 @@ function endBattle() {
     worldMenuEl.classList.remove('hidden');
     inventoryEl.classList.remove('hidden');
     renderScene();
+    renderInventory();
+    saveGame();
 }
 
 function renderBattle() {
@@ -495,6 +628,7 @@ function updateCurrentLocation(newLocation, allowEncounter = true) {
     southLocation = findLocationById(currentLocation.south);
 
     renderMap();
+    saveGame();
 
     if (allowEncounter) {
         triggerWildEncounter(false);
