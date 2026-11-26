@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "Potion",
+        "type": "Potion",
+        "description": "Recovers 20 HP"
+    },
+    {
+        "id": 2,
+        "name": "Pokeball",
+        "type": "Pokeball",
+        "description": "Capture a Pokemon"
+    },
+    {
+        "id": 3,
+        "name": "Ether",
+        "type": "Potion",
+        "description": "Recovers 10PP of a move"
+    }
+]

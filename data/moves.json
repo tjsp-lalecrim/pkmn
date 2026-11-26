@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "name": "Tackle",
+        "type": "Normal",
+        "power": 40,
+        "accuracy": 100,
+        "pp": 35
+    },
+    {
+        "id": 2,
+        "name": "Leer",
+        "type": "Normal",
+        "power": 0,
+        "accuracy": 100,
+        "pp": 30
+    },
+    {
+        "id": 3,
+        "name": "Scratch",
+        "type": "Normal",
+        "power": 40,
+        "accuracy": 100,
+        "pp": 35
+    },
+    {
+        "id": 4,
+        "name": "Growl",
+        "type": "Normal",
+        "power": 0,
+        "accuracy": 100,
+        "pp": 40
+    }
+]

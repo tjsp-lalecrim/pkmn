@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanto Adventure</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="main-scene"></div>
+
+        <div class="world-menu">
+            <div class="map-grid">
+                <div id="map-col-1" class="col">
+                    <div id="west-location" class="grid-item is-empty" data-id=""></div>
+                </div>
+                <div id="map-col-2" class="col">
+                    <div id="north-location" class="grid-item is-empty" data-id=""></div>
+                    <div id="center-view" class="grid-item current-location" data-id=""></div>
+                    <div id="south-location" class="grid-item is-empty" data-id=""></div>
+                </div>
+                <div id="map-col-3" class="col">
+                    <div id="east-location" class="grid-item is-empty" data-id=""></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="inventory">
+            <div class="items-list"></div>
+        </div>
+
+        <div class="battle-scene">
+            <div class="sprites"></div>
+            <div class="battle-menu"></div>
+        </div>
+
+    </div>
+</body>
+
+</html>

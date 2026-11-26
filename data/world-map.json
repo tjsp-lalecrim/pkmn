@@ -1,0 +1,370 @@
+[
+    {
+        "id": 1,
+        "name": "Pallet Town",
+        "north": 12,
+        "east": null,
+        "west": null,
+        "south": 32
+    },
+    {
+        "id": 2,
+        "name": "Viridian City",
+        "north": 37,
+        "east": null,
+        "west": 33,
+        "south": 12
+    },
+    {
+        "id": 3,
+        "name": "Pewter City",
+        "north": null,
+        "east": 14,
+        "west": null,
+        "south": 37
+    },
+    {
+        "id": 4,
+        "name": "Cerulean City",
+        "north": 8,
+        "east": null,
+        "west": null,
+        "south": 6
+    },
+    {
+        "id": 5,
+        "name": "Vermilion City",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": 7
+    },
+    {
+        "id": 6,
+        "name": "Lavender Town",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 7,
+        "name": "Celadon City",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 8,
+        "name": "Fuchsia City",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 9,
+        "name": "Saffron City",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 10,
+        "name": "Cinnabar Island",
+        "north": 32,
+        "east": 40,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 11,
+        "name": "Indigo Plateau",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": 41
+    },
+    {
+        "id": 12,
+        "name": "Route 1",
+        "north": 2,
+        "east": null,
+        "west": null,
+        "south": 1
+    },
+    {
+        "id": 13,
+        "name": "Route 2",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 14,
+        "name": "Route 3",
+        "north": null,
+        "east": null,
+        "west": 3,
+        "south": null
+    },
+    {
+        "id": 15,
+        "name": "Route 4",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 16,
+        "name": "Route 5",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 17,
+        "name": "Route 6",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 18,
+        "name": "Route 7",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 19,
+        "name": "Route 8",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 20,
+        "name": "Route 9",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 21,
+        "name": "Route 10",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 22,
+        "name": "Route 11",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 23,
+        "name": "Route 12",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 24,
+        "name": "Route 13",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 25,
+        "name": "Route 14",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 26,
+        "name": "Route 15",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 27,
+        "name": "Route 16",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 28,
+        "name": "Route 17",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 29,
+        "name": "Route 18",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 30,
+        "name": "Route 19",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 31,
+        "name": "Route 20",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 32,
+        "name": "Route 21",
+        "north": 1,
+        "east": null,
+        "west": null,
+        "south": 10
+    },
+    {
+        "id": 33,
+        "name": "Route 22",
+        "north": 34,
+        "east": 2,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 34,
+        "name": "Route 23",
+        "north": 41,
+        "east": null,
+        "west": null,
+        "south": 33
+    },
+    {
+        "id": 35,
+        "name": "Route 24",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 36,
+        "name": "Route 25",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 37,
+        "name": "Viridian Forest",
+        "north": 3,
+        "east": null,
+        "west": null,
+        "south": 2
+    },
+    {
+        "id": 38,
+        "name": "Mt. Moon",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": 5
+    },
+    {
+        "id": 39,
+        "name": "Rock Tunnel",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 40,
+        "name": "Seafoam Islands",
+        "north": null,
+        "east": null,
+        "west": 10,
+        "south": null
+    },
+    {
+        "id": 41,
+        "name": "Victory Road",
+        "north": 11,
+        "east": null,
+        "west": null,
+        "south": 34
+    },
+    {
+        "id": 42,
+        "name": "Power Plant",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 43,
+        "name": "Safari Zone",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 44,
+        "name": "Pokemon Tower",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 45,
+        "name": "Pokemon Mansion",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    },
+    {
+        "id": 46,
+        "name": "Cerulean Cave",
+        "north": null,
+        "east": null,
+        "west": null,
+        "south": null
+    }
+]
