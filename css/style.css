@@ -15,15 +15,93 @@ body {
     align-items: center;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .container {
     width: 100%;
     max-width: 1100px;
     min-height: 85vh;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 16px;
     justify-content: center;
     align-items: center;
+}
+
+.main-scene,
+.inventory,
+.battle-scene {
+    width: 100%;
+    max-width: 520px;
+    background-color: #1a1f2b;
+    border: 1px solid #323a4b;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.main-scene h2,
+.inventory h3 {
+    margin: 0 0 8px 0;
+}
+
+.location-banner {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #2e3748;
+}
+
+.party-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #212838;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.party-summary p {
+    margin: 0 0 6px 0;
+    font-size: 0.9rem;
+}
+
+.mini-sprite {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.xp-bar {
+    width: 180px;
+    height: 6px;
+    background-color: #12161f;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+.xp-fill {
+    height: 100%;
+    background-color: #6ea8fe;
+    transition: width 0.2s ease;
+}
+
+.scene-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.safe-zone-tag {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #9aa5b8;
 }
 
 .world-menu {
@@ -86,4 +164,117 @@ body {
     opacity: 0.35;
     cursor: default;
     background-color: #161a22;
+}
+
+.inventory-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #2a3140;
+    font-size: 0.9rem;
+}
+
+.inventory-item:last-child {
+    border-bottom: none;
+}
+
+.item-sprite {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.battle-scene {
+    display: none;
+}
+
+.battle-scene.is-active {
+    display: block;
+}
+
+.sprites {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.combatant {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #232a3a;
+    border: 1px solid #3b465e;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.combatant-info {
+    flex: 1;
+}
+
+.battle-sprite {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+}
+
+.combatant h4 {
+    margin: 0 0 6px 0;
+}
+
+.hp-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #12161f;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.hp-fill {
+    height: 100%;
+    background-color: #52b788;
+    transition: width 0.2s ease;
+}
+
+.battle-log {
+    background-color: #131722;
+    border-left: 3px solid #6ea8fe;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.battle-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.action-btn {
+    background-color: #2b3548;
+    color: #f4f6fb;
+    border: 1px solid #4c5c7a;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.action-btn:hover:not(:disabled) {
+    background-color: #3a4863;
+    border-color: #6ea8fe;
+}
+
+.action-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.flee-btn {
+    background-color: #4a252b;
+    border-color: #8c3b47;
 }

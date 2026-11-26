@@ -5,15 +5,19 @@
         "north": 12,
         "east": null,
         "west": null,
-        "south": 32
+        "south": 32,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 2,
         "name": "Viridian City",
-        "north": 37,
+        "north": 13,
         "east": null,
         "west": 33,
-        "south": 12
+        "south": 12,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 3,
@@ -21,55 +25,69 @@
         "north": null,
         "east": 14,
         "west": null,
-        "south": 37
+        "south": 13,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 4,
         "name": "Cerulean City",
-        "north": 8,
-        "east": null,
-        "west": null,
-        "south": 6
+        "north": 35,
+        "east": 20,
+        "west": 15,
+        "south": 16,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 5,
         "name": "Vermilion City",
-        "north": null,
-        "east": null,
+        "north": 17,
+        "east": 22,
         "west": null,
-        "south": 7
+        "south": null,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 6,
         "name": "Lavender Town",
-        "north": null,
+        "north": 21,
         "east": null,
-        "west": null,
-        "south": null
+        "west": 19,
+        "south": 23,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 7,
         "name": "Celadon City",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 18,
+        "west": 27,
+        "south": null,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 8,
         "name": "Fuchsia City",
-        "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "north": 26,
+        "east": 24,
+        "west": 29,
+        "south": null,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 9,
         "name": "Saffron City",
-        "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "north": 16,
+        "east": 19,
+        "west": 18,
+        "south": 17,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 10,
@@ -77,7 +95,9 @@
         "north": 32,
         "east": 40,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 11,
@@ -85,7 +105,9 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": 41
+        "south": 41,
+        "encounterRate": 0,
+        "wildPokemons": []
     },
     {
         "id": 12,
@@ -93,159 +115,199 @@
         "north": 2,
         "east": null,
         "west": null,
-        "south": 1
+        "south": 1,
+        "encounterRate": 0.65,
+        "wildPokemons": [1]
     },
     {
         "id": 13,
         "name": "Route 2",
-        "north": null,
+        "north": 3,
         "east": null,
         "west": null,
-        "south": null
+        "south": 2,
+        "encounterRate": 0.65,
+        "wildPokemons": [1]
     },
     {
         "id": 14,
         "name": "Route 3",
-        "north": null,
+        "north": 38,
         "east": null,
         "west": 3,
-        "south": null
+        "south": null,
+        "encounterRate": 0.65,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 15,
         "name": "Route 4",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 4,
+        "west": 38,
+        "south": null,
+        "encounterRate": 0.55,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 16,
         "name": "Route 5",
-        "north": null,
+        "north": 4,
         "east": null,
         "west": null,
-        "south": null
+        "south": 9,
+        "encounterRate": 0.55,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 17,
         "name": "Route 6",
-        "north": null,
+        "north": 9,
         "east": null,
         "west": null,
-        "south": null
+        "south": 5,
+        "encounterRate": 0.55,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 18,
         "name": "Route 7",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 9,
+        "west": 7,
+        "south": null,
+        "encounterRate": 0.5,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 19,
         "name": "Route 8",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 6,
+        "west": 9,
+        "south": null,
+        "encounterRate": 0.55,
+        "wildPokemons": [2]
     },
     {
         "id": 20,
         "name": "Route 9",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 21,
+        "west": 4,
+        "south": null,
+        "encounterRate": 0.6,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 21,
         "name": "Route 10",
-        "north": null,
+        "north": 20,
         "east": null,
         "west": null,
-        "south": null
+        "south": 6,
+        "encounterRate": 0.65,
+        "wildPokemons": [2]
     },
     {
         "id": 22,
         "name": "Route 11",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 23,
+        "west": 5,
+        "south": null,
+        "encounterRate": 0.55,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 23,
         "name": "Route 12",
-        "north": null,
+        "north": 6,
         "east": null,
-        "west": null,
-        "south": null
+        "west": 22,
+        "south": 24,
+        "encounterRate": 0.6,
+        "wildPokemons": [2]
     },
     {
         "id": 24,
         "name": "Route 13",
-        "north": null,
+        "north": 23,
         "east": null,
-        "west": null,
-        "south": null
+        "west": 25,
+        "south": null,
+        "encounterRate": 0.6,
+        "wildPokemons": [2]
     },
     {
         "id": 25,
         "name": "Route 14",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 24,
+        "west": 26,
+        "south": null,
+        "encounterRate": 0.6,
+        "wildPokemons": [2]
     },
     {
         "id": 26,
         "name": "Route 15",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 25,
+        "west": 8,
+        "south": null,
+        "encounterRate": 0.65,
+        "wildPokemons": [2]
     },
     {
         "id": 27,
         "name": "Route 16",
         "north": null,
-        "east": null,
+        "east": 7,
         "west": null,
-        "south": null
+        "south": 28,
+        "encounterRate": 0.55,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 28,
         "name": "Route 17",
-        "north": null,
+        "north": 27,
         "east": null,
         "west": null,
-        "south": null
+        "south": 29,
+        "encounterRate": 0.65,
+        "wildPokemons": [2]
     },
     {
         "id": 29,
         "name": "Route 18",
-        "north": null,
-        "east": null,
+        "north": 28,
+        "east": 8,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.6,
+        "wildPokemons": [2]
     },
     {
         "id": 30,
         "name": "Route 19",
         "north": null,
         "east": null,
-        "west": null,
-        "south": null
+        "west": 31,
+        "south": null,
+        "encounterRate": 0.6,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 31,
         "name": "Route 20",
         "north": null,
-        "east": null,
-        "west": null,
-        "south": null
+        "east": 30,
+        "west": 10,
+        "south": null,
+        "encounterRate": 0.6,
+        "wildPokemons": [2]
     },
     {
         "id": 32,
@@ -253,7 +315,9 @@
         "north": 1,
         "east": null,
         "west": null,
-        "south": 10
+        "south": 10,
+        "encounterRate": 0.65,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 33,
@@ -261,7 +325,9 @@
         "north": 34,
         "east": 2,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.65,
+        "wildPokemons": [1]
     },
     {
         "id": 34,
@@ -269,15 +335,19 @@
         "north": 41,
         "east": null,
         "west": null,
-        "south": 33
+        "south": 33,
+        "encounterRate": 0.65,
+        "wildPokemons": [2]
     },
     {
         "id": 35,
         "name": "Route 24",
-        "north": null,
+        "north": 36,
         "east": null,
         "west": null,
-        "south": null
+        "south": 4,
+        "encounterRate": 0.6,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 36,
@@ -285,7 +355,9 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": null
+        "south": 35,
+        "encounterRate": 0.6,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 37,
@@ -293,15 +365,19 @@
         "north": 3,
         "east": null,
         "west": null,
-        "south": 2
+        "south": 2,
+        "encounterRate": 0.8,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 38,
         "name": "Mt. Moon",
         "north": null,
-        "east": null,
+        "east": 15,
         "west": null,
-        "south": 5
+        "south": 14,
+        "encounterRate": 0.75,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 39,
@@ -309,7 +385,9 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.7,
+        "wildPokemons": [2]
     },
     {
         "id": 40,
@@ -317,7 +395,9 @@
         "north": null,
         "east": null,
         "west": 10,
-        "south": null
+        "south": null,
+        "encounterRate": 0.7,
+        "wildPokemons": [2]
     },
     {
         "id": 41,
@@ -325,7 +405,9 @@
         "north": 11,
         "east": null,
         "west": null,
-        "south": 34
+        "south": 34,
+        "encounterRate": 0.85,
+        "wildPokemons": [2]
     },
     {
         "id": 42,
@@ -333,7 +415,9 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.7,
+        "wildPokemons": [2]
     },
     {
         "id": 43,
@@ -341,7 +425,9 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.85,
+        "wildPokemons": [1, 2]
     },
     {
         "id": 44,
@@ -349,7 +435,9 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.7,
+        "wildPokemons": [2]
     },
     {
         "id": 45,
@@ -357,7 +445,9 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.7,
+        "wildPokemons": [2]
     },
     {
         "id": 46,
@@ -365,6 +455,8 @@
         "north": null,
         "east": null,
         "west": null,
-        "south": null
+        "south": null,
+        "encounterRate": 0.9,
+        "wildPokemons": [2]
     }
 ]
