@@ -14,12 +14,20 @@ let westLocation = null;
 let southLocation = null;
 
 let activeBattle = null;
+let activeTab = 'map';
+
+const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+const battleTabBtn = document.querySelector('.tab-btn[data-tab="battle"]');
+const tabPanels = {
+    map: document.getElementById('tab-map'),
+    party: document.getElementById('tab-party'),
+    inventory: document.getElementById('tab-inventory'),
+    battle: document.getElementById('tab-battle')
+};
 
 const mainSceneEl = document.querySelector('.main-scene');
-const worldMenuEl = document.querySelector('.world-menu');
-const inventoryEl = document.querySelector('.inventory');
+const partyPanelEl = document.querySelector('.party-panel');
 const itemsListEl = document.querySelector('.items-list');
-const battleSceneEl = document.querySelector('.battle-scene');
 const battleSpritesEl = document.querySelector('.battle-scene .sprites');
 const battleMenuEl = document.querySelector('.battle-scene .battle-menu');
 
@@ -28,6 +36,32 @@ const northLocationBtn = document.getElementById('north-location');
 const eastLocationBtn = document.getElementById('east-location');
 const westLocationBtn = document.getElementById('west-location');
 const southLocationBtn = document.getElementById('south-location');
+
+function setActiveTab(tabName) {
+    if (!tabPanels[tabName]) return;
+    if (tabName === 'battle' && !activeBattle) return;
+
+    activeTab = tabName;
+
+    tabButtons.forEach(btn => {
+        const isCurrent = btn.dataset.tab === tabName;
+        btn.classList.toggle('is-active', isCurrent);
+        btn.setAttribute('aria-selected', String(isCurrent));
+    });
+
+    Object.entries(tabPanels).forEach(([key, panel]) => {
+        panel?.classList.toggle('is-active', key === tabName);
+    });
+
+    if (tabName === 'party') renderPartyTab();
+    if (tabName === 'inventory') renderInventory();
+    if (tabName === 'battle' && activeBattle) renderBattle();
+}
+
+function updateBattleTabVisibility() {
+    if (!battleTabBtn) return;
+    battleTabBtn.classList.toggle('is-hidden', !activeBattle);
+}
 
 function getLocationAssetUrl(location) {
     if (!location) return '';
@@ -161,6 +195,7 @@ function loadSavedGame() {
 
         const savedLoc = findLocationById(parsed.currentLocationId) || findLocationById(1) || locations[0];
         updateCurrentLocation(savedLoc, false);
+        renderPartyTab();
         renderInventory();
         renderScene();
         return true;
@@ -175,6 +210,7 @@ function resetGame() {
     setupStarterTeamAndInventory();
     const startLoc = findLocationById(1) || locations[0] || null;
     updateCurrentLocation(startLoc, false);
+    setActiveTab('map');
 }
 
 function grantExperience(pokemonInst, xpGain) {
@@ -219,6 +255,7 @@ function setupStarterTeamAndInventory() {
     if (starterPokeball) inventory.push({ ...starterPokeball, quantity: 5 });
     if (starterEther) inventory.push({ ...starterEther, quantity: 2 });
 
+    renderPartyTab();
     renderInventory();
     renderScene();
     saveGame();
@@ -253,6 +290,7 @@ function useFieldItem(itemId) {
     }
 
     renderInventory();
+    renderPartyTab();
     renderScene();
     saveGame();
 }
@@ -261,8 +299,46 @@ function setLeadPokemon(index) {
     if (activeBattle || index <= 0 || index >= playerParty.length) return;
     const [chosen] = playerParty.splice(index, 1);
     playerParty.unshift(chosen);
+    renderPartyTab();
     renderScene();
     saveGame();
+}
+
+function renderPartyTab() {
+    if (!partyPanelEl) return;
+
+    const cardsHtml = playerParty.map((poke, idx) => {
+        const xpPct = Math.min(100, Math.round((poke.xp / poke.nextLevelXp) * 100));
+        const hpPct = Math.max(0, Math.min(100, Math.round((poke.hp / poke.maxHp) * 100)));
+        const movesText = (poke.moves || []).map(m => `${m.name} (${m.currentPp}/${m.pp})`).join(', ');
+
+        return `
+            <div class="party-summary ${idx === 0 ? 'is-lead' : ''}">
+                <img class="mini-sprite" src="${poke.sprite}" alt="${poke.name}" onerror="this.style.display='none'">
+                <div class="party-details">
+                    <p>
+                        <strong>${poke.name}</strong> Nv.${poke.level}
+                        ${idx === 0 ? '<span class="lead-badge">Líder</span>' : ''}
+                    </p>
+                    <small>HP: ${poke.hp}/${poke.maxHp}</small>
+                    <div class="hp-bar compact-hp"><div class="hp-fill" style="width:${hpPct}%"></div></div>
+                    <small>XP: ${poke.xp}/${poke.nextLevelXp}</small>
+                    <div class="xp-bar"><div class="xp-fill" style="width:${xpPct}%"></div></div>
+                    <small class="moves-meta">Golpes: ${movesText || '—'}</small>
+                </div>
+                ${idx > 0 && !activeBattle ? `<button class="action-btn small-btn set-lead-btn" data-party-idx="${idx}">Tornar Líder</button>` : ''}
+            </div>
+        `;
+    }).join('');
+
+    partyPanelEl.innerHTML = `
+        <h3>Equipe (${playerParty.length}/6)</h3>
+        <div class="party-list">${cardsHtml}</div>
+    `;
+
+    partyPanelEl.querySelectorAll('.set-lead-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLeadPokemon(Number(btn.dataset.partyIdx)));
+    });
 }
 
 function renderInventory() {
@@ -305,34 +381,24 @@ function renderInventory() {
 function renderScene() {
     if (!mainSceneEl || !currentLocation) return;
 
+    const lead = playerParty[0];
     const hasWild = Array.isArray(currentLocation.wildPokemons) && currentLocation.wildPokemons.length > 0;
     const locImgUrl = getLocationAssetUrl(currentLocation);
-
-    const partyCardsHtml = playerParty.map((poke, idx) => {
-        const xpPct = Math.min(100, Math.round((poke.xp / poke.nextLevelXp) * 100));
-        return `
-            <div class="party-summary ${idx === 0 ? 'is-lead' : ''}">
-                <img class="mini-sprite" src="${poke.sprite}" alt="${poke.name}" onerror="this.style.display='none'">
-                <div class="party-details">
-                    <p>
-                        <strong>${poke.name}</strong> Nv.${poke.level}
-                        ${idx === 0 ? '<span class="lead-badge">Líder</span>' : ''}
-                    </p>
-                    <small>HP: ${poke.hp}/${poke.maxHp} • XP: ${poke.xp}/${poke.nextLevelXp}</small>
-                    <div class="xp-bar"><div class="xp-fill" style="width:${xpPct}%"></div></div>
-                </div>
-                ${idx > 0 ? `<button class="action-btn small-btn set-lead-btn" data-party-idx="${idx}">Tornar Líder</button>` : ''}
-            </div>
-        `;
-    }).join('');
+    const xpPct = lead ? Math.min(100, Math.round((lead.xp / lead.nextLevelXp) * 100)) : 0;
 
     mainSceneEl.innerHTML = `
         <img class="location-banner" src="${locImgUrl}" alt="${currentLocation.name}" onerror="this.style.display='none'">
         <h2>${currentLocation.name}</h2>
-        <div class="party-list">
-            <h4>Equipe (${playerParty.length}/6)</h4>
-            ${partyCardsHtml}
-        </div>
+        ${lead ? `
+            <div class="party-summary is-lead">
+                <img class="mini-sprite" src="${lead.sprite}" alt="${lead.name}" onerror="this.style.display='none'">
+                <div class="party-details">
+                    <p><strong>Líder:</strong> ${lead.name} Nv.${lead.level} — HP: ${lead.hp}/${lead.maxHp}</p>
+                    <div class="xp-bar"><div class="xp-fill" style="width:${xpPct}%"></div></div>
+                    <small>Equipe: ${playerParty.length}/6 • XP: ${lead.xp}/${lead.nextLevelXp}</small>
+                </div>
+            </div>
+        ` : ''}
         <div class="scene-actions">
             ${hasWild ? '<button id="explore-btn" class="action-btn">Procurar Pokémon Selvagem</button>' : '<p class="safe-zone-tag">Zona segura</p>'}
             ${playerParty.some(p => p.hp < p.maxHp) ? '<button id="heal-center-btn" class="action-btn">Descansar (Curar Equipe)</button>' : ''}
@@ -340,14 +406,11 @@ function renderScene() {
         </div>
     `;
 
-    mainSceneEl.querySelectorAll('.set-lead-btn').forEach(btn => {
-        btn.addEventListener('click', () => setLeadPokemon(Number(btn.dataset.partyIdx)));
-    });
-
     document.getElementById('explore-btn')?.addEventListener('click', () => triggerWildEncounter(true));
     document.getElementById('heal-center-btn')?.addEventListener('click', () => {
         playerParty.forEach(p => { p.hp = p.maxHp; });
         renderScene();
+        renderPartyTab();
         renderInventory();
         saveGame();
     });
@@ -368,6 +431,7 @@ async function loadContent() {
         const startLoc = findLocationById(1) || locations[0] || null;
         updateCurrentLocation(startLoc, false);
     }
+    updateBattleTabVisibility();
 }
 
 function updateDirectionButton(btn, targetLocation) {
@@ -398,7 +462,6 @@ function renderMap() {
     updateDirectionButton(southLocationBtn, southLocation);
 
     renderScene();
-    renderInventory();
 }
 
 function findLocationById(id) {
@@ -430,10 +493,8 @@ function triggerWildEncounter(force = false) {
         finished: false
     };
 
-    worldMenuEl.classList.add('hidden');
-    inventoryEl.classList.add('hidden');
-    battleSceneEl.classList.add('is-active');
-
+    updateBattleTabVisibility();
+    setActiveTab('battle');
     renderBattle();
 }
 
@@ -529,6 +590,7 @@ function handleBattleItem(itemId) {
 
     saveGame();
     renderInventory();
+    renderPartyTab();
     renderBattle();
 }
 
@@ -538,10 +600,10 @@ function endBattle() {
     }
 
     activeBattle = null;
-    battleSceneEl.classList.remove('is-active');
-    worldMenuEl.classList.remove('hidden');
-    inventoryEl.classList.remove('hidden');
+    updateBattleTabVisibility();
+    setActiveTab('map');
     renderScene();
+    renderPartyTab();
     renderInventory();
     saveGame();
 }
@@ -651,6 +713,10 @@ function onLocationButtonClick(direction) {
             break;
     }
 }
+
+tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+});
 
 northLocationBtn?.addEventListener('click', () => onLocationButtonClick('north'));
 eastLocationBtn?.addEventListener('click', () => onLocationButtonClick('east'));

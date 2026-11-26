@@ -12,32 +12,57 @@
 <body>
     <div class="container">
 
-        <div class="main-scene"></div>
+        <nav class="tabs-bar" role="tablist" aria-label="Funcionalidades do jogo">
+            <button type="button" class="tab-btn is-active" data-tab="map" role="tab" aria-selected="true">
+                🗺️ Mapa & Cena
+            </button>
+            <button type="button" class="tab-btn" data-tab="party" role="tab" aria-selected="false">
+                🐾 Equipe
+            </button>
+            <button type="button" class="tab-btn" data-tab="inventory" role="tab" aria-selected="false">
+                🎒 Mochila
+            </button>
+            <button type="button" class="tab-btn is-hidden" data-tab="battle" role="tab" aria-selected="false">
+                ⚔️ Batalha
+            </button>
+        </nav>
 
-        <div class="world-menu">
-            <div class="map-grid">
-                <div id="map-col-1" class="col">
-                    <div id="west-location" class="grid-item is-empty" data-id=""></div>
-                </div>
-                <div id="map-col-2" class="col">
-                    <div id="north-location" class="grid-item is-empty" data-id=""></div>
-                    <div id="center-view" class="grid-item current-location" data-id=""></div>
-                    <div id="south-location" class="grid-item is-empty" data-id=""></div>
-                </div>
-                <div id="map-col-3" class="col">
-                    <div id="east-location" class="grid-item is-empty" data-id=""></div>
+        <section id="tab-map" class="tab-panel is-active" role="tabpanel">
+            <div class="main-scene"></div>
+
+            <div class="world-menu">
+                <div class="map-grid">
+                    <div id="map-col-1" class="col">
+                        <div id="west-location" class="grid-item is-empty" data-id=""></div>
+                    </div>
+                    <div id="map-col-2" class="col">
+                        <div id="north-location" class="grid-item is-empty" data-id=""></div>
+                        <div id="center-view" class="grid-item current-location" data-id=""></div>
+                        <div id="south-location" class="grid-item is-empty" data-id=""></div>
+                    </div>
+                    <div id="map-col-3" class="col">
+                        <div id="east-location" class="grid-item is-empty" data-id=""></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="inventory">
-            <div class="items-list"></div>
-        </div>
+        <section id="tab-party" class="tab-panel" role="tabpanel">
+            <div class="party-panel"></div>
+        </section>
 
-        <div class="battle-scene">
-            <div class="sprites"></div>
-            <div class="battle-menu"></div>
-        </div>
+        <section id="tab-inventory" class="tab-panel" role="tabpanel">
+            <div class="inventory">
+                <div class="items-list"></div>
+            </div>
+        </section>
+
+        <section id="tab-battle" class="tab-panel" role="tabpanel">
+            <div class="battle-scene">
+                <div class="sprites"></div>
+                <div class="battle-menu"></div>
+            </div>
+        </section>
 
     </div>
 </body>

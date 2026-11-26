@@ -12,29 +12,74 @@ body {
     padding: 16px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
-.hidden {
+.is-hidden {
     display: none !important;
 }
 
 .container {
     width: 100%;
-    max-width: 1100px;
-    min-height: 85vh;
+    max-width: 640px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    justify-content: center;
+    gap: 14px;
+    align-items: center;
+}
+
+.tabs-bar {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    background-color: #161b24;
+    border: 1px solid #2b3446;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.tab-btn {
+    flex: 1 1 auto;
+    background-color: #1e2533;
+    color: #cbd5e1;
+    border: 1px solid #323c52;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.tab-btn:hover {
+    background-color: #283245;
+    color: #ffffff;
+}
+
+.tab-btn.is-active {
+    background-color: #264653;
+    border-color: #52b788;
+    color: #ffffff;
+}
+
+.tab-panel {
+    display: none;
+    width: 100%;
+}
+
+.tab-panel.is-active {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     align-items: center;
 }
 
 .main-scene,
+.party-panel,
 .inventory,
 .battle-scene {
     width: 100%;
-    max-width: 540px;
     background-color: #1a1f2b;
     border: 1px solid #323a4b;
     border-radius: 12px;
@@ -42,14 +87,9 @@ body {
 }
 
 .main-scene h2,
+.party-panel h3,
 .inventory h3 {
-    margin: 0 0 8px 0;
-}
-
-.party-list h4 {
-    margin: 12px 0 8px 0;
-    font-size: 0.95rem;
-    color: #cbd5e1;
+    margin: 0 0 10px 0;
 }
 
 .location-banner {
@@ -83,6 +123,12 @@ body {
 .party-summary p {
     margin: 0 0 4px 0;
     font-size: 0.9rem;
+}
+
+.moves-meta {
+    display: block;
+    margin-top: 4px;
+    color: #9aa5b8;
 }
 
 .lead-badge {
@@ -130,10 +176,14 @@ body {
 }
 
 .world-menu {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 12px;
+    background-color: #1a1f2b;
+    border: 1px solid #323a4b;
+    border-radius: 12px;
 }
 
 .map-grid {
@@ -214,14 +264,6 @@ body {
     object-fit: contain;
 }
 
-.battle-scene {
-    display: none;
-}
-
-.battle-scene.is-active {
-    display: block;
-}
-
 .sprites {
     display: flex;
     flex-direction: column;
@@ -260,6 +302,11 @@ body {
     border-radius: 999px;
     overflow: hidden;
     margin-bottom: 4px;
+}
+
+.hp-bar.compact-hp {
+    max-width: 180px;
+    height: 6px;
 }
 
 .hp-fill {
